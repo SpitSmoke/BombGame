@@ -2,6 +2,11 @@
   "expo": {
     "name": "bombgame",
     "slug": "bombgame",
-    "version": "1.0.0"
-  }
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"]
+  },
+  "splash": {
+    "backgroundColor": "#000000"
+  },
+  "icon": "./assets/icon.jpg"
 }
