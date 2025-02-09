@@ -1,34 +1,39 @@
 import React, { useEffect } from "react"
-import { View, Animated } from "react-native"
-import { LogoText, SelectAMode, WelcomeText } from "./styles"
-import ButtonComponent from "../../components/buttons"
-
+import { View, Animated, Alert } from 'react-native'
+import { Container, LogoText, SelectAMode, WelcomeText } from './styles'
+import ButtonComponent from '../../components/buttons'
+import { useNavigation } from '@react-navigation/native'
+import { RootStackParams } from '../../others/types' //
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 const Start = () => {
-  const scaleAnim = new Animated.Value(1); 
+  const scaleAnim = new Animated.Value(1)
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams, 'Start'>>()
 
   const handleNavToPlayAlone = () => {
-	console.log("You Choose Solo Mode!")
+    Alert.alert('You Choose Solo Mode!')
   }
 
   const handleNavToPlay2v2 = () => {
-	console.log("You Choose 2v2!")
+    Alert.alert('You Choose 2v2!')
   }
 
   const handleNavToPlayRules = () => {
-	console.log("You Choose Rules Mode!")
+    navigation.navigate('Rules')
   }
 
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(scaleAnim, {
-          toValue: 1.5, 
-          duration: 200, 
+          toValue: 1.5,
+          duration: 200,
           useNativeDriver: true,
         }),
         Animated.timing(scaleAnim, {
-          toValue: 1, 
+          toValue: 1,
           duration: 200,
           useNativeDriver: true,
         }),
@@ -37,34 +42,37 @@ const Start = () => {
   }, [])
 
   return (
-    <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 90  }}>
-      <Animated.View
+    <Container>
+      <View
         style={{
-          transform: [{ scale: scaleAnim ,}],
-		  alignItems: "center"
+          flex: 1,
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          marginTop: 20,
         }}
       >
-    <LogoText>Bomber</LogoText>
-	  <WelcomeText>IT!</WelcomeText>
-      </Animated.View>
+        <Animated.View
+          style={{
+            transform: [{ scale: scaleAnim }],
+            alignItems: 'center',
+          }}
+        >
+          <LogoText>Bomber</LogoText>
+          <WelcomeText>IT!</WelcomeText>
+        </Animated.View>
 
-    <SelectAMode>Select a Mode</SelectAMode>
-	  <ButtonComponent 
-	  buttonText={'Solo'}
-	  handlePress={handleNavToPlayAlone}
-	  
-	  />
-	  <ButtonComponent 
-	  buttonText={'2V2'}
-	  handlePress={handleNavToPlay2v2}
-	  
-	  />
-	  <ButtonComponent 
-	  buttonText={'Rules'}
-	  handlePress={handleNavToPlayRules}
-	  
-	  />
-    </View>
+        <SelectAMode>Select a Mode</SelectAMode>
+        <ButtonComponent
+          buttonText={'Solo'}
+          handlePress={handleNavToPlayAlone}
+        />
+        <ButtonComponent buttonText={'2V2'} handlePress={handleNavToPlay2v2} />
+        <ButtonComponent
+          buttonText={'Rules'}
+          handlePress={handleNavToPlayRules}
+        />
+      </View>
+    </Container>
   )
 }
 
